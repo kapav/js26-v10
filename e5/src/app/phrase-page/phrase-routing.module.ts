@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import {NotfoundPageComponent} from '../notfound-page/notfound-page.component'
-import {PhrasePageComponent} from './phrase-page.component'
 import {PhraseListComponent} from '../shared/components/phrase-list/phrase-list.component'
 import {PhraseDetailComponent} from "../shared/components/phrase-detail/phrase-detail.component"
 
@@ -10,27 +9,12 @@ import {PhraseDetailComponent} from "../shared/components/phrase-detail/phrase-d
   imports: [
     RouterModule.forChild([
       {
-        path: '',
-        redirectTo: '/phrase',
-        pathMatch: 'full'
+        path: 'phrase',
+        component: PhraseListComponent
       },
       {
-        path: 'phrase',
-        component: PhrasePageComponent,
-        children: [{
-          path: '',
-          component: PhraseListComponent,
-          children: [
-            {
-              path: ':id',
-              component: PhraseDetailComponent
-            },
-            {
-              path: '',
-              component: PhraseDetailComponent
-            }
-          ]
-        }]
+        path: 'phrase/:id',
+        component: PhraseDetailComponent
       },
       {
         path: '**',
