@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { Phrase } from '../../interfaces/phrase';
 import {CanComponentDeactivate} from '../../services/can-deactivate.guard'
-import { PhraseService } from '../../services/phrase.service';
 
 @Component({
   selector: 'app-phrase-detail',
@@ -18,21 +17,14 @@ export class PhraseDetailComponent implements OnInit, CanComponentDeactivate {
 
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private phraseService: PhraseService
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    this.activatedRoute.paramMap
-      .forEach((paramMap: ParamMap) => {
-      let id = +paramMap.get('id')
-      this.phraseService
-        .getPhrase(id)
-        .then(result => {
-          this.phrase = result
-          this.editValue = this.phrase.value
-          this.editLanguage = this.phrase.language
-        })
+    this.activatedRoute.data.forEach((data: { phrase: Phrase }) => {
+        this.phrase = data.phrase
+        this.editValue = data.phrase.value
+        this.editLanguage = data.phrase.language
     })
   }
 
